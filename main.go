@@ -2,8 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
-	"strconv"
 
 	"github.com/amarnathcjd/gogram/telegram"
 	"github.com/joho/godotenv"
@@ -51,7 +49,3 @@ func main() {
 	log.Println("Bot is running. Waiting for updates...")
 	client.Idle()
 }
-
-// keep strconv used if needed by config path
-var _ = strconv.Atoi
-var _ = os.Getenv
