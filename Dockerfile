@@ -7,8 +7,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o /swastika-music .
 
 FROM alpine:3.20
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates ffmpeg
 WORKDIR /app
 COPY --from=builder /swastika-music .
-# Config.env should be provided via env vars or mounted volume in production
 CMD ["./swastika-music"]
