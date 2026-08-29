@@ -7,7 +7,8 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o /swastika-music .
 
 FROM alpine:3.20
-RUN apk add --no-cache ca-certificates ffmpeg
+RUN apk add --no-cache ca-certificates ffmpeg python3 py3-pip \
+    && pip3 install --break-system-packages --no-cache-dir yt-dlp
 WORKDIR /app
 COPY --from=builder /swastika-music .
 CMD ["./swastika-music"]

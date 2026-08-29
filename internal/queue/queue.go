@@ -5,11 +5,13 @@ import (
 )
 
 type Track struct {
-	Title    string
-	URL      string
-	Duration string
+	Title       string
+	URL         string
+	Duration    string
+	Thumbnail   string
 	RequestedBy string
-	IsVideo  bool
+	IsVideo     bool
+	ID          string
 }
 
 type ChatQueue struct {
