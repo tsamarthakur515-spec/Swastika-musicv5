@@ -2,7 +2,6 @@ package plugins
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/amarnathcjd/gogram/telegram"
@@ -80,12 +79,8 @@ func handlePlay(b *bot.Bot, m *telegram.NewMessage, video bool) error {
 		_, _ = status.Edit(fmt.Sprintf("❌ Download failed\n\n<b>%s</b>\n<code>%s</code>", escapeHTML(track.Title), escapeHTML(msg)), &telegram.SendOptions{ParseMode: "HTML"})
 		return nil
 	}
-	defer func() {
-		// keep cache like Python downloads/ — do not always delete
-		_ = file
-	}()
 
-	caption := fmt.Sprintf("%s <b>%s</b>\n⏱ %s\n👤 %s\n\n<code>VC stream (ntgcalls) — next layer</code>", kind, escapeHTML(track.Title), track.Duration, escapeHTML(track.RequestedBy))
+	caption := fmt.Sprintf("%s <b>%s</b>\n⏱ %s\n👤 %s\n\n<code>Same download path as Python (API → yt-dlp)</code>", kind, escapeHTML(track.Title), track.Duration, escapeHTML(track.RequestedBy))
 	_, sendErr := b.Client.SendMedia(chatID, file, &telegram.MediaOptions{
 		Caption:   caption,
 		ParseMode: "HTML",
@@ -94,8 +89,7 @@ func handlePlay(b *bot.Bot, m *telegram.NewMessage, video bool) error {
 		_, _ = status.Edit("❌ Send failed: "+escapeHTML(sendErr.Error()), &telegram.SendOptions{ParseMode: "HTML"})
 		return nil
 	}
-	_, _ = status.Edit(fmt.Sprintf("%s <b>Playing</b>\n\n<b>%s</b>\n⏱ %s\n👤 %s\n📎 File sent (API → yt-dlp same as Python)", kind, escapeHTML(track.Title), track.Duration, escapeHTML(track.RequestedBy)), &telegram.SendOptions{ParseMode: "HTML"})
-	_ = os.Getenv // keep imports honest if needed
+	_, _ = status.Edit(fmt.Sprintf("%s <b>Ready</b>\n\n<b>%s</b>\n⏱ %s\n👤 %s\n📎 Media sent", kind, escapeHTML(track.Title), track.Duration, escapeHTML(track.RequestedBy)), &telegram.SendOptions{ParseMode: "HTML"})
 	return nil
 }
 
