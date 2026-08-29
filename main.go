@@ -8,6 +8,7 @@ import (
 
 	"github.com/tsamarthakur515-spec/Swastika-musicv5/internal/bot"
 	"github.com/tsamarthakur515-spec/Swastika-musicv5/internal/config"
+	"github.com/tsamarthakur515-spec/Swastika-musicv5/internal/console"
 	"github.com/tsamarthakur515-spec/Swastika-musicv5/plugins"
 )
 
@@ -41,7 +42,8 @@ func main() {
 	if err != nil {
 		log.Fatal("Failed to get bot info: ", err)
 	}
-	log.Printf("✅ Swastika Music V5 started as @%s (ID: %d)\n", me.Username, me.ID)
+
+	console.Banner(me.Username, me.ID)
 
 	b := bot.New(client, cfg)
 	plugins.Register(b)

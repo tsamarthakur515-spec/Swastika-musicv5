@@ -4,15 +4,15 @@ import (
 	"github.com/tsamarthakur515-spec/Swastika-musicv5/internal/bot"
 )
 
-// Register wires every plugin (core + all Python-port plugins).
+// Register wires every plugin (core + full Python-port surface).
 func Register(b *bot.Bot) {
-	// Core
+	// Core music
 	registerStart(b)
 	registerPlay(b)
 	registerControls(b)
 	registerStream(b)
 
-	// Group management / moderation
+	// Group management
 	registerModeration(b)
 	registerLocks(b)
 	registerNoAbuse(b)
@@ -25,6 +25,7 @@ func Register(b *bot.Bot) {
 	registerGuessGame(b)
 	registerCouple(b)
 	registerCrypto(b)
+	registerRob(b)
 
 	// Admin / system
 	registerSudo(b)
@@ -38,4 +39,5 @@ func Register(b *bot.Bot) {
 	registerCallbacks(b)
 	registerActive(b)
 	registerTracker(b)
+	registerKill(b)
 }

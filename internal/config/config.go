@@ -4,14 +4,17 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 type Config struct {
-	APIID     int
-	APIHash   string
-	BotToken  string
-	OwnerID   int64
-	LogGroup  int64
+	APIID         int
+	APIHash       string
+	BotToken      string
+	OwnerID       int64
+	LogGroup      int64
+	StringSession string
+	SudoUsers     []int64
 }
 
 func Load() (*Config, error) {
@@ -29,9 +32,10 @@ func Load() (*Config, error) {
 	}
 
 	cfg := &Config{
-		APIID:    apiID,
-		APIHash:  apiHash,
-		BotToken: botToken,
+		APIID:         apiID,
+		APIHash:       apiHash,
+		BotToken:      botToken,
+		StringSession: os.Getenv("STRING_SESSION"),
 	}
 
 	if v := os.Getenv("OWNER_ID"); v != "" {
@@ -44,6 +48,26 @@ func Load() (*Config, error) {
 			cfg.LogGroup = id
 		}
 	}
+	if v := os.Getenv("SUDO_USERS"); v != "" {
+		for _, p := range strings.Split(v, ",") {
+			p = strings.TrimSpace(p)
+			if id, err := strconv.ParseInt(p, 10, 64); err == nil {
+				cfg.SudoUsers = append(cfg.SudoUsers, id)
+			}
+		}
+	}
 
 	return cfg, nil
+}
+
+func (c *Config) IsSudo(userID int64) bool {
+	if c.OwnerID != 0 && userID == c.OwnerID {
+		return true
+	}
+	for _, id := range c.SudoUsers {
+		if id == userID {
+			return true
+		}
+	}
+	return false
 }
