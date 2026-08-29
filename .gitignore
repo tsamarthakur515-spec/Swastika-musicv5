@@ -1,0 +1,24 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+swastika-music
+
+# Session files
+*.session
+*.session-journal
+
+# Env with secrets
+Config.env
+.env
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Go
+vendor/
