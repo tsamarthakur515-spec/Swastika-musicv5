@@ -22,7 +22,7 @@ func New() *Player {
 	return &Player{}
 }
 
-// PlayTrack resolves is already done; downloads audio and sends to chat as audio file.
+// PlayTrack downloads audio and sends it to the chat as media.
 func (p *Player) PlayTrack(client *telegram.Client, chatID int64, track queue.Track) error {
 	p.mu.Lock()
 	defer p.mu.Unlock()
@@ -39,9 +39,9 @@ func (p *Player) PlayTrack(client *telegram.Client, chatID int64, track queue.Tr
 	}
 	defer os.Remove(file)
 
-	// Send as audio document to the chat (works without VC)
-	_, err = client.SendFile(chatID, file, &telegram.MediaOptions{
-		Caption: fmt.Sprintf("🎵 <b>%s</b>\n👤 %s\n⏱ %s", track.Title, track.RequestedBy, track.Duration),
+	caption := fmt.Sprintf("🎵 <b>%s</b>\n👤 %s\n⏱ %s", track.Title, track.RequestedBy, track.Duration)
+	_, err = client.SendMedia(chatID, file, &telegram.MediaOptions{
+		Caption:   caption,
 		ParseMode: "HTML",
 	})
 	return err
