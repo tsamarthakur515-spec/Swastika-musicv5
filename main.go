@@ -9,6 +9,7 @@ import (
 	"github.com/tsamarthakur515-spec/Swastika-musicv5/internal/bot"
 	"github.com/tsamarthakur515-spec/Swastika-musicv5/internal/config"
 	"github.com/tsamarthakur515-spec/Swastika-musicv5/internal/console"
+	"github.com/tsamarthakur515-spec/Swastika-musicv5/platforms"
 	"github.com/tsamarthakur515-spec/Swastika-musicv5/plugins"
 )
 
@@ -20,6 +21,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	platforms.Configure(cfg.YTAPIURL, cfg.YTAPIKey)
 
 	client, err := telegram.NewClient(telegram.ClientConfig{
 		AppID:   cfg.APIID,

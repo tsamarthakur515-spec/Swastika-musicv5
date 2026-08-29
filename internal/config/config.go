@@ -15,6 +15,9 @@ type Config struct {
 	LogGroup      int64
 	StringSession string
 	SudoUsers     []int64
+	// YouTube helpers (Python Youtube.py parity)
+	YTAPIURL string
+	YTAPIKey string
 }
 
 func Load() (*Config, error) {
@@ -36,6 +39,16 @@ func Load() (*Config, error) {
 		APIHash:       apiHash,
 		BotToken:      botToken,
 		StringSession: os.Getenv("STRING_SESSION"),
+		YTAPIURL:      os.Getenv("API_URL"),
+		YTAPIKey:      os.Getenv("API_KEY"),
+	}
+
+	// Defaults from Python PANDAMUSIC/platforms/Youtube.py
+	if cfg.YTAPIURL == "" {
+		cfg.YTAPIURL = "https://aruyt.up.railway.app"
+	}
+	if cfg.YTAPIKey == "" {
+		cfg.YTAPIKey = "YUKI-XJd3KfUSWeuOWsiZyuIrlmQf"
 	}
 
 	if v := os.Getenv("OWNER_ID"); v != "" {

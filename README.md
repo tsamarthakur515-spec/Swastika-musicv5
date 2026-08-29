@@ -1,51 +1,37 @@
 # 🎵 Swastika Music V5 (Go + gogram)
 
-Telegram music bot in **Go** + [gogram](https://github.com/amarnathcjd/gogram).
+Go port of [SWASTIKA-MUSIC-V5](https://github.com/tsamarthakur515-spec/SWASTIKA-MUSIC-V5).
 
-Port of [SWASTIKA-MUSIC-V5](https://github.com/tsamarthakur515-spec/SWASTIKA-MUSIC-V5).
+## YouTube layer (same as Python)
 
----
+| Step | Python | Go (this repo) |
+|------|--------|----------------|
+| Search | youtubesearchpython → yt-dlp | yt-dlp `ytsearch` |
+| Download | **API** (`API_URL`/`API_KEY`) first | **Same API** first |
+| Fallback | local yt-dlp | local yt-dlp |
+| Cache | `downloads/` | `downloads/` |
 
-## ✅ Working now
+Defaults (same as Python `Youtube.py`):
 
-- `/play` `/vplay` — **YouTube search + resolve via yt-dlp**, queue, download MP3, send audio to chat
-- `/pause` `/resume` `/skip` `/stop` `/queue` `/replay`
-- Full plugin command surface (moderation, games, sudo, …)
-
-> **Voice Chat (group call) streaming** is next (gortc / ntgcalls).  
-> Right now `/play` sends the track as an **audio file** in the chat.
-
----
-
-## Setup
-
-```bash
-cp Config.env.example Config.env
-# API_ID, API_HASH, BOT_TOKEN
-go mod tidy && go run .
+```
+API_URL=https://aruyt.up.railway.app
+API_KEY=YUKI-XJd3KfUSWeuOWsiZyuIrlmQf
 ```
 
-**Needs:** `yt-dlp` + `ffmpeg` on PATH (Dockerfile installs both).
+## Working
 
-**Railway env:** `API_ID`, `API_HASH`, `BOT_TOKEN`
+- `/play` `/vplay` — search + API/yt-dlp download + send media
+- Queue, pause, skip, stop, etc.
+- Full plugin command surface
 
----
+## Not yet (Python has, Go next)
 
-## Docker
+- **Voice Chat streaming** via ntgcalls / py-tgcalls  
+  → needs gortc/ntgcalls + often a userbot `STRING_SESSION`
 
-```bash
-docker build -t swastika-music .
-docker run --env-file Config.env swastika-music
-```
+## Railway env
 
----
-
-## Roadmap
-
-1. ✅ Plugin surface + queue
-2. ✅ YouTube via yt-dlp + audio file delivery
-3. ⏳ Telegram Voice Chat streaming (gortc)
-4. ⏳ Database (sudo, welcome, locks)
-5. ⏳ Full moderation / games logic
+`API_ID` `API_HASH` `BOT_TOKEN`  
+Optional: `API_URL` `API_KEY` `OWNER_ID` `LOG_GROUP_ID`
 
 MIT
